@@ -40,6 +40,175 @@ h1 img {
   align-items: center;
   gap: 40px;
 }
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  }
+.popup {
+  background-color: #202f43;
+  padding: 30px 80px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: #fff;
+  font-size: 1.2rem;
+  position: relative;
+}
+.colorshow {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: #00ffc8 1px solid;
+  display: inline;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 8px;
+}
+input[type="color"] {
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 11;
+  transition: all 0.3s ease;
+}
+label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+label img {
+  width: 25px;
+  height: 25px;
+}
+input {
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  background-color: #202f43;
+  font-size: 1rem;
+  border-radius: 30px;
+  border: #00ffc8 1px solid;
+  color: #00ffc8;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  appearance: none;
+}
+.pointer {
+  position: absolute;
+  pointer-events: none;
+  animation: bounce 1s infinite;
+  animation-timing-function: ease-in-out;
+  z-index: 4;
+  top: 45%;
+  left: 45%;
+}
+.scoreboard p svg {
+  vertical-align: middle;
+  margin-bottom: 5px;
+}
+.scoreboard p.alert{
+  animation: node 0.5s 3;
+  animation-timing-function: ease-in-out;
+  
+}
+.scoreboard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+@keyframes bounce {
+  0% {
+    transform: translateY(0) rotate(-45deg) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-30deg) scale(1.2);
+  }
+  100% {
+    transform: translateY(0) rotate(-45deg) scale(1);
+  }
+}
+@keyframes node {
+  0% {
+    transform: rotate(5deg);
+    color: red;
+  }
+  30% {
+    transform: rotate(-5deg);
+    color: red
+  }
+  50% {
+    transform: rotate(5deg);
+    color: red;
+}
+  80% {
+    transform: rotate(-2deg);
+    color: red
+  }
+  90% {
+    transform: rotate(2deg);
+      color: red;
+  }
+  100% {
+    transform: rotate(0deg);
+      color: red
+  }
+}
+#playerx {
+  color: #00ffc8; }
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+input:focus, #playerx:focus {
+  border-width: 2px;
+}
+
+input::placeholder {
+  color: #00ffc8;
+}
+.close:hover {
+  background-color: #10c28f;
+  color: #202f43;
+}
+input[type = 'number'] {
+ border-color: white;
+ color: white;
+}
+input[type = 'number']::placeholder {
+  color: white;
+}
 button {
   padding: 20px 50px;
   border: none;
@@ -55,14 +224,16 @@ button {
   height: 150px;
   background-color: #202f43;
   border-radius: 5px;
-  background-repeat: no-repeat;
-  background-position: center;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 5px;
+  position: relative;
 }
 .scoreboard {
   display: flex;
@@ -76,7 +247,11 @@ button {
   right: 50px;
   background-color: #202f43;
   border-radius: 30px;
-  padding: 10px 20px;
+  padding: 10px 40px;
+}
+.btns {
+  display: flex;
+  gap: 20px;
 }
 .scoreboard img {
   width: 40px;
@@ -86,10 +261,4 @@ button {
 .scoreboard p {
   font-size: 2.5rem;
   font-weight: 600;
-}
-.xs {
-  color: #c2a110;
-}
-.os {
-  color: #00ffc8;
 }
