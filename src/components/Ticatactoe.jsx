@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect, use} from 'react'
 import {  X, XIcon, CircleIcon, PointerIcon, } from 'lucide-react';
+
 const data = ["", "", "", "", "", "", "", "", ""];
 const Ticatactoe = () => {
   const titleref = useRef(null);
+  const [alert, setAlert] = useState(false);
+  const [styles, setStyles] = useState({});
   const [playerx, setPlayerx] = useState("");
   const [showpointer, setShowpointer] = useState(true);
   const [playerO, setPlayerO] = useState("");
@@ -36,43 +39,64 @@ const [lock, setLock] = React.useState(false);
     const checkWin = () => {
       if(data[0] === data[1] && data[0] === data[2] && data[0] !== "") {
         win(data[0]);
+        applystyles(70, 30, 0, 400, data[0]);
       }
       else if(data[3] === data[4] && data[3] === data[5] && data[3] !== "") {
         win(data[3]);
+        applystyles(225, 30, 0, 400, data[3]);
       }
       else if(data[6] === data[7] && data[6] === data[8] && data[6] !== "") {
         win(data[6]);
+        applystyles(380, 30, 0, 400, data[6]);
       }
       else if(data[0] === data[3] && data[0] === data[6] && data[0] !== "") {
         win(data[0]);
+        applystyles(225, -125, 90, 400, data[0]);
       }
       else if(data[1] === data[4] && data[1] === data[7] && data[1] !== "") {
         win(data[1]);
+        applystyles(225, 30, 90, 400, data[1]);
       }
       else if(data[2] === data[5] && data[2] === data[8] && data[2] !== "") {
         win(data[2]);
+        applystyles(225, 185, 90, 400, data[2]);
       }
       else if(data[0] === data[4] && data[0] === data[8] && data[0] !== "") {
         win(data[0]);
+        applystyles(220, -50, 45, 550, data[0]);
       }
       else if(data[2] === data[4] && data[2] === data[6] && data[2] !== "") {
         win(data[2]);
+        applystyles(220, -40, -45, 550, data[2]);
       }
       else if(count === 8) {
         win("draw");
+        applystyles(0, 0, 0, 0, "draw");
       }
+    }
+    const applystyles = (top, left, rotate, width, winner) => {
+  const styles = {
+    top: top + "px",
+    left: left + "px",
+    rotate: rotate + "deg",
+    width: width + "px",
+    backgroundColor: winner === "X" ? colorx : coloro,
+    opacity: 0.7,
+  }
+  setStyles(styles);
+
     }
     const win = (winner) => {
       setLock(true);
       if(winner === 'X') {
         titleref.current.innerHTML = `Congratulations: ${playerx || 'X'} won!`;
         titleref.current.style.color = colorx;
-        setScorex(prevscore => { const newscore = prevscore + 1; return newscore });
+        setScorex(prevscore => { return prevscore + 1 });
       }
       else if(winner === 'O') {
         titleref.current.innerHTML = `Congratulations: ${playerO || 'O'} won!`;
         titleref.current.style.color = coloro;
-        setScoreo(prevscore => { const newscore = prevscore + 1; return newscore });
+        setScoreo(prevscore => { return prevscore + 1 });
       }
       else {
         titleref.current.innerHTML = "Draw!";
@@ -81,25 +105,23 @@ const [lock, setLock] = React.useState(false);
       
     } 
     useEffect(() => {
-      if(scoreO + scoreX > rounds-1) {
-        if(scoreO > scoreX) {
+      const limitscore = rounds%2 === 0 ? (rounds / 2)+1 : Math.ceil(rounds / 2);
+      
+        if(scoreO > limitscore-1) {
           setWinner(playerO || "Player O");
         }
-        else if(scoreX > scoreO) {
+        else if(scoreX > limitscore-1) {
           setWinner(playerx || "Player X");
         }
-        else {
-          setWinner('draw');
+        if(rounds % 2 === 0 && scoreO === limitscore-1 && scoreX === limitscore-1) {
+          setWinner("draw");
         }
-      }
-      // if(scoreO + scoreX > rounds-2) {
-      //   if(scoreO > scoreX) {
-      //     document.querySelector(".os").classList.add("alert");
-      //   }
-      //   else if(scoreX > scoreO) {
-      //     document.querySelector(".xs").classList.add("alert");
-      //   }
-    }, [scoreO, scoreX])
+        if(scoreO > limitscore-2 || scoreX > limitscore-2) {
+setAlert(true);
+        }
+        return () => {  setAlert(false);
+        }
+    }, [scoreO, scoreX, rounds])
     const reset = () => {
       setCount(0);
       setLock(false);
@@ -130,6 +152,7 @@ const [lock, setLock] = React.useState(false);
       setShowPopup(false);
       reset();
     } 
+
   return (
     <div className='tictac'>
      { showPopup && (
@@ -156,13 +179,15 @@ const [lock, setLock] = React.useState(false);
       </div>) }
       <div className="scoreboard">
         <h3>Scoreboard</h3>
-        <p className={`xs ${scoreX + scoreO > rounds-2 && scoreX>scoreO ? "alert" : ""}`} style={{color: colorx}}>{playerx || <XIcon size={40}/>} : {scoreX}</p>
-        <p className={`os ${scoreX + scoreO > rounds-2 && scoreO>scoreX ? "alert" : ""}`} style={{color: coloro}}>{playerO || <CircleIcon size={40} />} : {scoreO}</p>
+        {alert && <h4>Gamepoint!</h4>}
+        <p className={`xs ${alert && scoreX > scoreO ? "alert" : ""}`} style={{color: colorx}}>{playerx || <XIcon size={40}/>} : {scoreX}</p>
+        <p className={`os ${alert && scoreO > scoreX ? "alert" : ""}`} style={{color: coloro}}>{playerO || <CircleIcon size={40} />} : {scoreO}</p>
         {rounds && <p>Best of {rounds}</p>}
         <button onClick={resetscore}>Reset</button>
       </div>
         <h1 ref={titleref}>Tic Tac Toe Game in <span>React</span></h1>
         <div className="board">
+          <div className='crossing' style={lock ? styles : {}}></div> 
 <div className='square' onClick={(e)=> render(e,0)}>{data[0] === "X" && <XIcon size={90} color={colorx} />}{data[0] === "O" && <CircleIcon size={90} color={coloro} />}</div>
 <div className='square' onClick={(e)=> render(e,1)}>{data[1] === "X" && <XIcon size={90} color={colorx} />}{data[1] === "O" && <CircleIcon size={90} color={coloro} />}</div>
 <div className='square' onClick={(e)=> render(e,2)}>{data[2] === "X" && <XIcon size={90} color={colorx} />}{data[2] === "O" && <CircleIcon size={90} color={coloro} />}</div>
