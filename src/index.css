@@ -26,7 +26,7 @@ span {
 }
 h1 {
   color: #fff;
-  font-size: 3rem;
+  font-size: clamp(1.75rem, 3vw + 0.25rem, 3rem);
   text-align: center;
 }
 h1 img {
@@ -39,6 +39,7 @@ h1 img {
   flex-direction: column;
   align-items: center;
   gap: 40px;
+  margin-right: 200px;
 }
 .overlay {
   position: fixed;
@@ -58,10 +59,22 @@ h1 img {
   border-radius: 30px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
   color: #fff;
   font-size: 1.2rem;
   position: relative;
+  box-shadow: 1px 1px 5px 10px rgba(0, 0, 0, 0.1);
+  animation: popIn 0.3s ease forwards;
+}
+.playerinput {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #4661847b;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 20px;
 }
 .colorshow {
   width: 30px;
@@ -117,8 +130,7 @@ input {
   background-color: #202f43;
   font-size: 1rem;
   border-radius: 30px;
-  border: #00ffc8 1px solid;
-  color: #00ffc8;
+  color: #fff;
 }
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
@@ -146,6 +158,7 @@ input[type="number"]::-webkit-inner-spin-button {
   display: flex;
   align-items: center;
   gap: 10px;
+  max-width: 400px;
 }
 @keyframes bounce {
   0% {
@@ -184,8 +197,7 @@ input[type="number"]::-webkit-inner-spin-button {
       color: red
   }
 }
-#playerx {
-  color: #00ffc8; }
+
 form {
   display: flex;
   flex-direction: column;
@@ -193,10 +205,6 @@ form {
 }
 input:focus, #playerx:focus {
   border-width: 2px;
-}
-
-input::placeholder {
-  color: #00ffc8;
 }
 .close:hover {
   background-color: #10c28f;
@@ -206,9 +214,7 @@ input[type = 'number'] {
  border-color: white;
  color: white;
 }
-input[type = 'number']::placeholder {
-  color: white;
-}
+
 button {
   padding: 20px 50px;
   border: none;
@@ -218,10 +224,14 @@ button {
   font-size: 1.2rem;
   border-radius: 50px;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
-.crossing {
+button:hover {
+  background-color:#29394e;
+}
+.crossing-outer, .crossing-inner {
   position: absolute;
-  height: 10px;
+  height: 15px;
   border-radius: 10px;
 }
 .square {
@@ -234,11 +244,13 @@ button {
   justify-content: center;
   align-items: center;
 }
+
 .board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 5px;
   position: relative;
+
 }
 .scoreboard {
   display: flex;
@@ -249,21 +261,106 @@ button {
   font-size: 1.2rem;
   position: absolute;
   top: 30px;
-  right: 50px;
+  right: 30px;
   background-color: #202f43;
   border-radius: 30px;
   padding: 10px 40px;
+  box-shadow: 1px 1px 5px 10px rgba(0, 0, 0, 0.1);
+}
+#selectdifficulty {
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  background-color: #202f43;
+  font-size: 1rem;
+  border-radius: 30px;
+  color: #fff;
+  cursor: pointer;
+}
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #202f43;
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  border-radius: 30px;
+  color: #fff;
+  cursor: pointer;
 }
 .btns {
   display: flex;
   gap: 20px;
 }
-.scoreboard img {
-  width: 40px;
-  height: 40px; 
-  margin-bottom: -8px;
-}
+
 .scoreboard p {
-  font-size: 2.5rem;
+  font-size: clamp(1.25rem, 1vw + 1rem, 1.75rem);
   font-weight: 600;
+}
+.mark {
+  transform: scale(0);
+  opacity: 0;
+  animation: popIn 0.3s ease forwards;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  80% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@media (max-width: 1150px) {
+  .square {
+    width: 100px;
+    height: 100px;
+  }
+  button {
+    padding: 15px 30px;
+    font-size: 1rem;
+  }
+  .scoreboard p svg {
+    width: 30px;
+    height: 30px;
+  }
+.scoreboard {
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+} 
+.popup {
+  padding: 20px 50px;
+  font-size: 1rem;
+} }
+@media (max-width: 600px) {
+  .tictac {
+    margin-right: 0;
+  }
+  .scoreboard {
+    display: none;
+    top: 50px;
+    right: 10px;
+    padding: 10px 20px;
+    z-index: 12;
+  }
+  .popup {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    z-index: 15;
+  }
+  .overlay {
+    z-index: 14;
+  }
+  .viewscore {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #202f43;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    z-index: 13;
+  }
 }
