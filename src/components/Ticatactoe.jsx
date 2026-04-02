@@ -200,7 +200,7 @@ const normalAIMove = (board, aiSymbol, humanSymbol) => {
   
 };
 const isTablet = window.matchMedia("(max-width: 1150px)").matches;
-const isMobile = window.matchMedia("(max-width: 600px)").matches;
+const isMobile = window.matchMedia("(max-width: 678px)").matches;
     const checkWin = (board = data) => {
     if(lock) return;
 const winStyles = [

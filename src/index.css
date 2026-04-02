@@ -323,16 +323,19 @@ select {
     width: 30px;
     height: 30px;
   }
+  .tictac {
+    margin-right: 250px;
+  }
 .scoreboard {
   top: 20px;
   right: 20px;
-  padding: 10px 20px;
+  padding: 10px;
 } 
 .popup {
   padding: 20px 50px;
   font-size: 1rem;
 } }
-@media (max-width: 600px) {
+@media (max-width: 678px) {
   .tictac {
     margin-right: 0;
   }
