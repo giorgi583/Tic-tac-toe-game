@@ -451,8 +451,8 @@ alertSound.play();
       <div className="scoreboard" style={{display: isMobile ? (isscoreboardvisible ? 'flex' : 'none') : 'flex'}}>
         <h3>Scoreboard</h3>
         {alertscore && <h4>Gamepoint!</h4>}
-        {vsAI ? <p className={`xs ${alertscore && scoreX > scoreO ? "alert" : ""}`} style={{color: humanColor}}>You {humanSymbol === 'X' ? <XIcon size={40} /> : <CircleIcon size={40} />} : {humanSymbol === 'X' ? scoreX : scoreO}</p> : <p className={`xs ${alertscore && scoreX > scoreO ? "alert" : ""}`} style={{color: colorx}}>{playerx || <XIcon size={40}/>} : {scoreX}</p> }
-        {vsAI ? <p className={`os ${alertscore && scoreO > scoreX ? "alert" : ""}`} style={{color: AIColor}}>AI({AIDifficulty}) {humanSymbol === 'X' ? <CircleIcon size={40} /> : <XIcon size={40} />} : {humanSymbol === 'X' ? scoreO : scoreX}</p> :  <p className={`os ${alertscore && scoreO > scoreX ? "alert" : ""}`} style={{color: coloro}}>{playerO || <CircleIcon size={40} />} : {scoreO}</p>}
+        {vsAI ? <p className={`xs ${alertscore && scoreX > scoreO && humanSymbol === 'X' || alertscore && scoreO > scoreX && humanSymbol === 'O' ? "alert" : ""}`} style={{color: humanColor}}>You {humanSymbol === 'X' ? <XIcon size={40} /> : <CircleIcon size={40} />} : {humanSymbol === 'X' ? scoreX : scoreO}</p> : <p className={`xs ${alertscore && scoreX > scoreO ? "alert" : ""}`} style={{color: colorx}}>{playerx || <XIcon size={40}/>} : {scoreX}</p> }
+        {vsAI ? <p className={`os ${alertscore && scoreO > scoreX && humanSymbol === 'X' || alertscore && scoreX > scoreO && humanSymbol === 'O' ? "alert" : ""}`} style={{color: AIColor}}>AI({AIDifficulty}) {humanSymbol === 'X' ? <CircleIcon size={40} /> : <XIcon size={40} />} : {humanSymbol === 'X' ? scoreO : scoreX}</p> :  <p className={`os ${alertscore && scoreO > scoreX ? "alert" : ""}`} style={{color: coloro}}>{playerO || <CircleIcon size={40} />} : {scoreO}</p>}
         {rounds && <p>Best of {rounds}</p>}
         <button onClick={resetscore}>Reset</button>
       </div>  
