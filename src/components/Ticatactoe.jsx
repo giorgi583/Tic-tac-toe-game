@@ -129,7 +129,8 @@ if (result !== null) return;
    AIDifficulty === 'Impossible' && aiMove(newBoard);
    AIDifficulty === 'Easy' && easyAIMove(newBoard, humanSymbol === "X" ? "O" : "X");
    AIDifficulty === 'Medium' && normalAIMove(newBoard, humanSymbol === "X" ? "O" : "X", humanSymbol);
-  }, 300);   }
+
+  }, 300); }
   }
       
         else {
@@ -141,6 +142,7 @@ if (result !== null) return;
            AIDifficulty === 'Impossible' && aiMove(newBoard);
            AIDifficulty === 'Easy' && easyAIMove(newBoard, humanSymbol === "X" ? "O" : "X");
            AIDifficulty === 'Medium' && normalAIMove(newBoard, humanSymbol === "X" ? "O" : "X", humanSymbol);
+    
           }, 300);
             newBoard[num] = humanSymbol;
             setData(newBoard);
@@ -289,16 +291,18 @@ if (board.every(cell => cell !== "")) {
         }
         if(rounds % 2 === 0 && scoreO === limitscore-1 && scoreX === limitscore-1) {
           setWinner("draw");
-          drawSound.play();
+       drawSound.play();
         }
         if(scoreO === limitscore-1 || scoreX === limitscore-1) {
 setalertscore(true);
-alertSound.play();
+ if(scoreO + scoreX < rounds) alertSound.play();
         }
         if(vsAI) {
   if(humanSymbol === 'O') {
-   if( scoreO > limitscore-1 ) setWinner(humanName); winSound.play();
-   if( scoreX > limitscore-1 ) setWinner("AI");  loseSound.play();
+   if( scoreO > limitscore-1 ) 
+    { setWinner(humanName); winSound.play(); }
+   if( scoreX > limitscore-1 ) 
+    {setWinner("AI");  loseSound.play(); }
   }
   else {
     if(scoreX > limitscore-1) {
